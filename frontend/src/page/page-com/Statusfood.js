@@ -7,7 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Chip from '@mui/material/Chip';
 import Inputfood from './com/Inputfood';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,9 +37,9 @@ function createData(name, tag, mor, eve) {
 
 export default function Statusfood() {
   const [rows, setRows] = useState([
-    createData('Eclair', 262, '', ''),
-    createData('Cupcake', 305, '', ''),
-    createData('Gingerbread', 356, '', ''),
+    createData('Eclair', '005', '', ''),
+    createData('Cupcake', '003', '', ''),
+    createData('Gingerbread', '002', '', ''),
   ]);
 
   const handleSaveInputfood = (data) => {
@@ -55,10 +58,31 @@ export default function Statusfood() {
     console.log('Updated Data in rows:', updatedRows);
   };
 
+  const renderStatusChip = (status) => {
+    if (status === 'เช้า' || status === 'เย็น') {
+      return (
+        <Chip
+          icon={<CheckCircleIcon style={{ color: '#30BE96' }} />}
+          label=""
+          color="success"
+          variant="outlined"
+        />
+      );
+    }
+    return (
+      <Chip
+        icon={<CancelIcon style={{ color: '#f44336' }} />}
+        label=""
+        color="error"
+        variant="outlined"
+      />
+    );
+  };
+
   return (
-    <div style={{ width: '100%', height: '100%', backgroundColor: 'EDEDED', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', borderRadius: '8px' }}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+    <div style={{ width: '100%', height: '100%', backgroundColor: '#EDEDED', borderRadius: '8px' }}>
+      <TableContainer component={Paper} style={{ border: '2px solid #dddddd' }}>
+        <Table sx={{ minWidth: 300 }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>ชื่อ</StyledTableCell>
@@ -74,9 +98,18 @@ export default function Statusfood() {
                 <StyledTableCell component="th" scope="row">
                   {row.name}
                 </StyledTableCell>
-                <StyledTableCell align="center">{row.tag}</StyledTableCell>
-                <StyledTableCell align="center">{row.mor === 'เช้า' ? 'กินแล้ว' : 'ยังไม่กิน'}</StyledTableCell>
-                <StyledTableCell align="center">{row.eve === 'เย็น' ? 'กินแล้ว' : 'ยังไม่กิน'}</StyledTableCell>
+                {/* ใช้ Chip สำหรับแสดง Tag */}
+                <StyledTableCell align="center">
+                  <Chip label={row.tag} color="primary" variant="outlined" style={{ borderRadius: '16px' }} />
+                </StyledTableCell>
+                {/* ใช้ Chip สำหรับแสดงสถานะเช้า */}
+                <StyledTableCell align="center">
+                  {renderStatusChip(row.mor)}
+                </StyledTableCell>
+                {/* ใช้ Chip สำหรับแสดงสถานะเย็น */}
+                <StyledTableCell align="center">
+                  {renderStatusChip(row.eve)}
+                </StyledTableCell>
                 <StyledTableCell align="center">
                   <Inputfood cowName={row.name} onSave={handleSaveInputfood} />
                 </StyledTableCell>

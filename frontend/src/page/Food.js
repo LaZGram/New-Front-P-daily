@@ -6,14 +6,17 @@ const divStyle = {
     fontSize: '24px',
     fontFamily: 'Roboto',
     fontWeight: 700,
-    wordWrap: 'break-word'
+    wordWrap: 'break-word',
+    marginBottom: '10px'
   };
 
 export default function Food() {
     return (
       <div style={{margin:'12px'}}>
-        <div style={divStyle}>อาหาร</div>
-        <Statusfood/>
+        <div style={{width:'100%',minWidth:'300px'}}>
+          <div style={divStyle}>อาหาร</div>
+          <Statusfood/>
+        </div>
       </div>
     );
   }

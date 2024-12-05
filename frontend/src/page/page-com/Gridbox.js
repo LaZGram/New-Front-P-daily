@@ -2,10 +2,6 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import { LuMilk } from "react-icons/lu";
-import { FaBahtSign } from "react-icons/fa6";
-import { FaCow } from "react-icons/fa6";
-import { GiEvilLove } from "react-icons/gi";
 
 function Item(props) {
   const { sx, ...other } = props;
@@ -15,12 +11,11 @@ function Item(props) {
         bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
         color: (theme) => (theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800'),
         border: '1px solid',
-        borderColor: (theme) =>
-          theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
-        p: 1,
+        borderColor: (theme) => (theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300'),
+        p: 2,
         borderRadius: 2,
-        fontSize: '0.875rem',
-        fontWeight: '700',
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+        textAlign: 'center',
         ...sx,
       }}
       {...other}
@@ -40,48 +35,55 @@ Item.propTypes = {
 
 export default function Gridbox() {
   return (
-    <div style={{ width: '100%' , alignItems:'center'}}>
+    <div style={{ width: '100%', alignItems: 'center' }}>
       <Box
         sx={{
           display: 'grid',
-          gap: 1,
-          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: 2,
+          gridTemplateColumns: {
+            xs: 'repeat(2, 1fr)', // 2 items per row on small screens
+            sm: 'repeat(2, 1fr)', // 2 items per row on small-medium screens
+            md: 'repeat(4, 1fr)', // 4 items per row on medium and larger screens
+          },
         }}
       >
+        {/* Milk Quantity */}
         <Grid item xs>
-          <Item style={{ backgroundColor: 'rgb(255, 255, 255)', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-              <LuMilk size={30} />
-              <div style={{ fontSize: '30px', fontWeight: 'bold' }}>10</div>
-              <div style={{fontSize: '20px'}}>ปริมาณนม (ลิตร)</div>
-            </div>
+          <Item>
+            <div style={{ fontSize: '18px', color: '#555' }}>ปริมาณนม</div>
+            <div style={{ fontSize: '32px', fontWeight: 'bold' }}>10 ลิตร</div>
+            <div style={{ color: 'green', fontSize: '16px' }}>↑ 2 ลิตร</div>
+            <div style={{ fontSize: '14px', color: '#888' }}>vs previous 30 days</div>
           </Item>
         </Grid>
+
+        {/* Revenue */}
         <Grid item xs>
-          <Item style={{ backgroundColor: 'rgb(255, 255, 255)', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-              <FaBahtSign size={30} />
-              <div style={{ fontSize: '30px', fontWeight: 'bold' }}>10</div>
-              <div style={{fontSize: '20px'}}>รายรับ (บาท)</div>
-            </div>
+          <Item>
+            <div style={{ fontSize: '18px', color: '#555' }}>รายรับ</div>
+            <div style={{ fontSize: '32px', fontWeight: 'bold' }}>10 ฿</div>
+            <div style={{ color: 'green', fontSize: '16px' }}>↑ 5 ฿</div>
+            <div style={{ fontSize: '14px', color: '#888' }}>vs previous 30 days</div>
           </Item>
         </Grid>
+
+        {/* Number of Cows */}
         <Grid item xs>
-          <Item style={{ backgroundColor: 'rgb(255, 255, 255)', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-              <FaCow size={30} />
-              <div style={{ fontSize: '30px', fontWeight: 'bold' }}>10</div>
-              <div style={{fontSize: '20px'}}>จำนวนวัว (ตัว)</div>
-            </div>
+          <Item>
+            <div style={{ fontSize: '18px', color: '#555' }}>จำนวนวัว</div>
+            <div style={{ fontSize: '32px', fontWeight: 'bold' }}>10 ตัว</div>
+            <div style={{ color: 'red', fontSize: '16px' }}>↓ 1 ตัว</div>
+            <div style={{ fontSize: '14px', color: '#888' }}>vs previous 30 days</div>
           </Item>
         </Grid>
+
+        {/* Cows Ready for Breeding */}
         <Grid item xs>
-          <Item style={{ backgroundColor: 'rgb(255, 255, 255)', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-              <GiEvilLove size={30} />
-              <div style={{ fontSize: '30px', fontWeight: 'bold' }}>10</div>
-              <div style={{fontSize: '20px'}}>วัวที่พร้อมผสม (ตัว)</div>
-            </div>
+          <Item>
+            <div style={{ fontSize: '18px', color: '#555' }}>วัวที่พร้อมผสม</div>
+            <div style={{ fontSize: '32px', fontWeight: 'bold' }}>10 ตัว</div>
+            <div style={{ color: 'green', fontSize: '16px' }}>↑ 3 ตัว</div>
+            <div style={{ fontSize: '14px', color: '#888' }}>vs previous 30 days</div>
           </Item>
         </Grid>
       </Box>

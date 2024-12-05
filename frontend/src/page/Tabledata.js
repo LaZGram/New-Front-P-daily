@@ -13,10 +13,12 @@ const divStyle = {
 export default function Tabledata() {
   return (
     <div style={{margin:'12px'}}>
-      <div style={divStyle}>ทำนายวันผสมพันธุ์</div>
-      <Suggestcow/>
-      <p></p>
-      <Normalcow/>
+      <div style={{width:'100%',minWidth: '300px'}}>
+        <div style={divStyle}>ทำนายวันผสมพันธุ์</div>
+        <Suggestcow/>
+        <p></p>
+        <Normalcow/>
+      </div>
     </div>
   );
 }
