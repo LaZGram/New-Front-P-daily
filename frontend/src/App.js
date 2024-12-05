@@ -1,34 +1,56 @@
+import React from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom';
 import './App.css';
-import React, { useState } from 'react';
-import Navbar from './components/Navbar';
-import { GiHamburgerMenu } from "react-icons/gi";
 import Homefarmer from './page/Homefarmer';
 import User from './User';
 import Tabledata from './page/Tabledata';
 import Milk from './page/Milk';
-import Food from './page/Food';
 import Homepage from './page/Homepage';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Food from './page/Food';
+import Navbarmenu from './components/Navbarmenu';
+import SuperTokens, { SuperTokensWrapper } from 'supertokens-auth-react';
+import { getSuperTokensRoutesForReactRouterDom } from 'supertokens-auth-react/ui';
+import ThirdParty, { Github, Google, Facebook, Apple } from 'supertokens-auth-react/recipe/thirdparty';
+import Session from 'supertokens-auth-react/recipe/session';
+import { ThirdPartyPreBuiltUI } from 'supertokens-auth-react/recipe/thirdparty/prebuiltui';
+import * as reactRouterDom from 'react-router-dom';
+
+SuperTokens.init({
+  appInfo: {
+    appName: 'loginTest',
+    apiDomain: 'http://localhost:3000',
+    websiteDomain: 'http://localhost:3000',
+    apiBasePath: '/Auth',
+    websiteBasePath: '/Auth',
+  },
+  recipeList: [
+    ThirdParty.init({
+      signInAndUpFeature: {
+        providers: [
+          Github.init(),
+          Google.init(),
+          Facebook.init(),
+          Apple.init(),
+        ],
+      },
+    }),
+    Session.init(),
+  ],
+});
 
 function App() {
-  const [showNav, setShowNav] = useState(false);
-
-  const toggleNav = () => {
-    setShowNav(!showNav);
-  };
-
   return (
-    <div className="App">
-      <Router>
-        <header>
-        <GiHamburgerMenu onClick={toggleNav} className="hamburger-icon" />
-        <div className="header-container">P'dairy</div>
-        </header>
-        <div className='mar1'></div>
-        <Navbar show={showNav} />
-        <div className='main'>
+    <SuperTokensWrapper>
+      <BrowserRouter>
+        <div className="App">
+          <Navbarmenu />
           <Routes>
-            <Route path="/" element={<User />} />
+            {getSuperTokensRoutesForReactRouterDom(reactRouterDom, [ThirdPartyPreBuiltUI])}
+            <Route path="/" element={<Homepage />} />
             <Route path="/user" element={<User />} />
             <Route path="/milk" element={<Milk />} />
             <Route path="/food" element={<Food />} />
@@ -37,8 +59,8 @@ function App() {
             <Route path="/homepage" element={<Homepage />} />
           </Routes>
         </div>
-      </Router>
-    </div>
+      </BrowserRouter>
+    </SuperTokensWrapper>
   );
 }
 
